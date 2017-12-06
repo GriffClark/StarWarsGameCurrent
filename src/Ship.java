@@ -21,10 +21,10 @@ public class Ship {
 	protected int speed;
 	protected boolean usedAbility;
 	protected String name;
-	protected String owner; //the name of the player, which they will set 
-	protected ShipType shipType;
+	protected Player owner;
 	protected int damageDodge;
 	protected char graphic;
+	protected static int pointCost;
 	
 	public void setDodgeDamage(int a)
 	{
@@ -34,6 +34,21 @@ public class Ship {
 	public Ship()
 	{
 		
+	}
+	
+	public int getPointCost()
+	{
+		return pointCost;
+	}
+	
+	public void setPointCost(int pointCost)
+	{
+		this.pointCost = pointCost;
+	}
+	
+	public static int getCost()
+	{
+		return pointCost;
 	}
 	
 	public int getDamageDodge()
@@ -97,7 +112,7 @@ public class Ship {
 		
 	}
 	
-	public void setOwner(String owner)
+	public void setOwner(Player owner)
 	{
 		this.owner = owner;
 	}
@@ -107,7 +122,7 @@ public class Ship {
 		return graphic;
 	}
 	
-	public String getOwner()
+	public Player getOwner()
 	{
 		return owner;
 	}
@@ -156,28 +171,7 @@ public class Ship {
 	{
 		this.name = name;
 	}
-	
-//	public ShipType getShipType() eclipse doesn't like this part not sure why but moving on and will come back to it later
-//	{
-//		switch (ShipType)
-//		{
-//		Shiptype happy;
-//		case Flagship: happy = Flagship; break;
-//		case Scout: happy = Scout; break ;
-//		case Destroyer: happy = Destroyer; break;
-//		case Cruiser: happy = Cruiser; break;
-//		case Special: happy = Special; break;
-//		default: happy = null;
-//		
-//		}
-//		return happy;
-//	}
-	
-	public void setShipType(ShipType shipType)
-	{
-		this.shipType = shipType;
-	}
-	
+
 	public boolean isAlive()
 	{
 		if (health > 0)
@@ -189,7 +183,7 @@ public class Ship {
 	
 	public String toString()
 	{
-		return shipType + " " + name;
+		return name + "       ";
 	}
 
 }

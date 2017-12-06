@@ -2,6 +2,7 @@
 public class StarDestroyer extends Ship{
 	
 	int energy = 200;
+	int pointCost = 2;
 	
 	public StarDestroyer()
 	{
@@ -11,6 +12,7 @@ public class StarDestroyer extends Ship{
 		speed = 2;
 		range = 5;
 		graphic = 'S';
+		
 //		shipType = destroyer; why does this not work?
 	}
 	

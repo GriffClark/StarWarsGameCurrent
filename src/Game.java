@@ -5,8 +5,9 @@ public class Game {
 	
 	public static void main (String[] args)
 	{
-		ArrayList<Ship> p1Ships = new ArrayList<Ship>();
-		ArrayList<Ship> p2Ships = new ArrayList<Ship>();
+		
+		ArrayList<Ship> xWingSpotter = new ArrayList<Ship>();
+
 		Scanner s = new Scanner(System.in);
 		Player[] players = new Player[2];
 		/**
@@ -22,8 +23,21 @@ public class Game {
 		System.out.println("enter player 1 name");
 		String barley = s.nextLine();
 		Player player1 = new Player(barley);
+		int jot = 0;
+		while (jot == 0)
+		{
 		System.out.println("enter player 2 name");
 		barley = s.nextLine();
+		//to ensure no repeats
+		if (barley.equals(player1.getName()))
+		{
+			System.out.println("must have unique name");
+		}
+		else
+		{
+			jot++;
+		}
+		}
 		Player player2 = new Player(barley);
 		
 		//now to determine who is attacker and who is defender
@@ -56,24 +70,14 @@ public class Game {
 		grid[2][0] = destroyer1;
 		grid[4][0] = destroyer2;
 		grid[3][0] = deathStar;
-		for (int i = 0; i < grid.length; i++)
-		{
-			TIEFighter tiefighter = new TIEFighter();
-			grid[i][1] = tiefighter;
-		} //should give 7 tiefighters
-		
+
 		for (int i = 2; i < 5; i++) //should generate 3 X-Wings
 		{
 			XWing x = new XWing();
 			grid[i][13] = x;
+			xWingSpotter.add(x);
 		}
-		
-		BWing b1 = new BWing();
-		BWing b2 = new BWing();
-		
-		grid[0][14] = b1;
-		grid[6][14] = b2;
-		
+
 		//let's see what this looks like
 		for(int i = 0; i < grid.length; i++)
 		{
@@ -90,54 +94,182 @@ public class Game {
 			}
 			System.out.println();
 		}
+		
+		//to give players control over their ships
+		for(int i = 0; i < players.length; i++)
+		{
+			if(players[i].getIsAttacker() == false)
+			{
+				players[i].shipsControlled.add(deathStar);
+				players[i].shipsControlled.add(destroyer1);
+				players[i].shipsControlled.add(destroyer2);
+				//default things that defender starts with
+			}
+			else
+			{
+				for (int index = 0; index < xWingSpotter.size(); index++)
+				{
+					players[i].shipsControlled.add(xWingSpotter.get(i));
+				}
+			
+			}
+		}
+		
+		//now to let players choose their ships
+		System.out.println("time to choose your ships. " + player1.getName() + " will go first");
+		/**
+		 * right now it does not matter who is attacker or defender. player1 will always choose from the same list of ships. I want the attacker to choose from this list. 
+		 * What is the best way to fix this
+		 */
+		
+		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
+		System.out.println("'X Wing', 'B Wing'");
+		
+		while (player1.getPoints() > 0)
+		{
+			String choice = s.nextLine();
+			if (choice.equals("X Wing") && player1.getPoints() >= XWing.getCost())
+			{
+				XWing x = new XWing();
+				player1.shipsControlled.add(x);
+				player1.setPoints(player1.getPoints() - 1);
+			}
+			
+			else if (choice.equals("B Wing") && player1.getPoints() >= BWing.getCost())
+			{
+				BWing bb = new BWing();
+				player1.shipsControlled.add(bb);
+				player1.setPoints(player1.getPoints() - 1);
+			}
+			
+			else if (choice.equals("break"))
+			{
+				break;
+			}
+			
+			else
+			{
+				System.out.println("invalid name. Try again or type 'break'");
+			}
+			System.out.println("Current points = " +player1.getPoints());
+			System.out.println("Current ships = " + player1.shipsControlled());
+			
+		}
+		
+		System.out.println("player 1 done choosing ships \n-------------------------------------------------------");
+		
+		System.out.println("time for "  + player2.getName() + " to choose ships");
+		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
+		System.out.println("TIE Fighter, Star Destroyer");
+
+		
+		while (player2.getPoints() > 0)
+		{
+			String choice = s.nextLine();
+			if (choice.equals("Star Destroyer") && player2.getPoints() >= StarDestroyer.getCost())
+			{
+				XWing x = new XWing();
+				player1.shipsControlled.add(x);
+				player1.setPoints(player1.getPoints() - 1);
+			}
+			
+			else if (choice.equals("TIE Fighter") && player2.getPoints() >= TIEFighter.getCost())
+			{
+				BWing bb = new BWing();
+				player1.shipsControlled.add(bb);
+				player1.setPoints(player1.getPoints() - 1);
+			}
+			
+			else if (choice.equals("break"))
+			{
+				break;
+			}
+			
+			else
+			{
+				System.out.println("invalid name or cost. Try again or type 'break'");
+			}
+			System.out.println("Current points = " +player1.getPoints());
+			System.out.println("Current ships = " + player1.shipsControlled());
+		}
+		
+		
 		//the game loop
+		String input = null;
 		int turnCounter = 0;
 		while(true)
+			
+			while(input != "pass turn") // this doesn't work
+			{
+				input = s.nextLine();
 		{
 			if (turnCounter > 0 && turnCounter%2 == 1)
 			{
 				player1.takeTurn();
 				player2.passTurn();
-				System.out.println("Player 1 turn");
 			}
 			
-			else
+			else if (turnCounter  == 0 || turnCounter%2 == 0)
 			{
 				player1.passTurn();
 				player2.takeTurn();
-				System.out.println("Player 2 turn");
 			}
-			turnCounter ++;
 			
-			System.out.println ("Game is running. " + turnCounter + " turns taken");
-			String input = s.nextLine();
+			if (input.equals("check turn"))
+			{
+				for (int melon = 0; melon < players.length; melon++)
+				{
+					System.out.println(players[melon].getName() + " is in the game...? " + players[melon].checkTurn());
+				}
+			}
+			
+			System.out.println ("Game is running. \n" + turnCounter + " turns taken");
+			
+			
 			if (input.equals("get info"))
 			{
-				System.out.println("please enter x coordinate 1-7");
-				int xCord = s.nextInt();
-				System.out.println("please enter y coordinate 1-15");
-				int yCord = s.nextInt();
-				if(xCord > 7 || yCord > 15)
+				System.out.println("please enter y coordinate 1-7");
+				int yCoordinate = s.nextInt();
+				System.out.println("please enter x coordinate 1-15");
+				int xCoordinate = s.nextInt();
+				if(yCoordinate > 7 || xCoordinate > 15)
 				{
 					System.out.println("unhandled out of bounds error. Please do other things");
 				}
 				else
 				{
-					if (grid[xCord - 1][yCord - 1] != null)
+					if (grid[yCoordinate - 1][xCoordinate - 1] != null) //IK its backwards it needs to be fixed
 					{
-						System.out.println(grid[xCord - 1][yCord - 1].toString());
+						System.out.println(grid[yCoordinate - 1][xCoordinate - 1].toString());
 					}
 					else
 					{
 						System.out.println("spot is empty");
 					}
 				}
+				
 			}
+			
+			if (input.equals("display ships")) //not else if because people can do multiple things per turn
+			{
+				System.out.println("for which player?");
+				input = s.nextLine(); //need to make another check here
+				if(input.equals(player1.getName()))
+				{
+					System.out.println(player1.shipsControlled() + "\t");
+				}
+				else if (input.equals(player2.getName()))
+				{
+					System.out.println(player2.shipsControlled());
+				}
+			}
+				
 			
 			//how to end turn
 			
 		}
+			} //ends turn loop
 		
-	}
+	}//ends game loop
 
 }

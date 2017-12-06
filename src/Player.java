@@ -6,16 +6,46 @@ public class Player {
 	protected boolean myTurn;
 	protected boolean inTheGame;
 	protected boolean isAttacker = false; //default false will set one to true
+	protected int points;
 	
 	public Player(String name)
 	{
 		this.name = name;
 		inTheGame = true; 
+		points = 3;
 	}
 	
 	public void setIsAttacker(boolean i)
 	{
 		this.isAttacker = i;
+	}
+	
+	public String shipsControlled()
+	{
+		
+		String batman = "";
+		for (int i = 0; i < shipsControlled.size(); i++)
+		{
+			batman += shipsControlled.get(i).toString();
+		}
+		
+		return batman;
+		
+	}
+	
+	public boolean checkTurn()
+	{
+		return myTurn;
+	}
+	
+	public void setPoints (int points)
+	{
+		this.points = points;
+	}
+	
+	public int getPoints()
+	{
+		return points;
 	}
 	
 	public boolean getIsAttacker()
@@ -68,6 +98,7 @@ public class Player {
 		
 		return name + " " + shipList + "in the game?" + inTheGame;
 	}
+
 	
 
 }

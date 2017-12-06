@@ -2,6 +2,8 @@
 public class DeathStar extends Ship{ //to lazy to make this right now. Also should it extend Ship?
 
 	boolean reactorHit;
+	
+	//need a way to tell if the death star has been targeted yet
 	int deathRayCharge;
 	
 	public DeathStar()
@@ -28,7 +30,7 @@ public class DeathStar extends Ship{ //to lazy to make this right now. Also shou
 	{
 		if (deathRayCharge >= 6)
 		{
-			
+			ship.setHealth(0); //kablooey!
 		}
 		else
 		{
@@ -51,5 +53,8 @@ public class DeathStar extends Ship{ //to lazy to make this right now. Also shou
 		TIEFighter elmo = new TIEFighter();
 		return elmo;
 	}
+	/**
+	 * also need to make an ability here where if the deathRay has enough charge it can be used to blow up the planet
+	 */
 
 }
