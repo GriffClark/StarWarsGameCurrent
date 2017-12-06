@@ -8,6 +8,7 @@ public class XWing extends Ship{
 		speed = 6;
 		name = "X Wing";
 		range = 3;
+		graphic = 'X';
 	}
 	
 	@Override

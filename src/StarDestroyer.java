@@ -10,6 +10,7 @@ public class StarDestroyer extends Ship{
 		name = "Star Destroyer";
 		speed = 2;
 		range = 5;
+		graphic = 'S';
 //		shipType = destroyer; why does this not work?
 	}
 	

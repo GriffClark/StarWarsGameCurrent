@@ -9,6 +9,7 @@ public class TIEFighter extends Ship{
 			speed = 8;
 			name = "TIE Fighter";
 			range = 2;
+			graphic = 'T';
 		
 	}
 

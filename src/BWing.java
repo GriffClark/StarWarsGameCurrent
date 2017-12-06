@@ -8,6 +8,7 @@ public class BWing extends Ship{
 		speed = 3;
 		name = "B Wing";
 		range = 3;
+		graphic = 'B';
 	}
 	
 	public Torpedo fireTorpedo(Ship target)

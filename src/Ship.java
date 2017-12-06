@@ -24,6 +24,7 @@ public class Ship {
 	protected String owner; //the name of the player, which they will set 
 	protected ShipType shipType;
 	protected int damageDodge;
+	protected char graphic;
 	
 	public void setDodgeDamage(int a)
 	{
@@ -99,6 +100,11 @@ public class Ship {
 	public void setOwner(String owner)
 	{
 		this.owner = owner;
+	}
+	
+	public char getGraphic()
+	{
+		return graphic;
 	}
 	
 	public String getOwner()
