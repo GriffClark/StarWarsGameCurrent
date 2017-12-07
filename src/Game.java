@@ -28,8 +28,8 @@ public class Game {
 		System.out.println("enter player 1 name");
 		String barley = s.nextLine();
 		Player player1 = new Player(barley);
-		int jot = 0;
-		while (jot == 0)
+		int breaker = 0;
+		while (breaker == 0)
 		{
 		System.out.println("enter player 2 name");
 		barley = s.nextLine();
@@ -40,7 +40,7 @@ public class Game {
 		}
 		else
 		{
-			jot++;
+			breaker++; //to break while loop
 		}
 		}
 		Player player2 = new Player(barley);
@@ -92,7 +92,7 @@ public class Game {
 		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
 		System.out.println("'X Wing', 'B Wing'");
 		
-		while (agressor.getPoints() > 0)
+		while (agressor.getPoints() > 0) //as long as you have points you can keep buying ships
 		{
 			String choice = s.nextLine();
 			if (choice.equals("X Wing") && agressor.getPoints() >= XWing.getCost())
@@ -140,6 +140,10 @@ public class Game {
 				defender.setPoints(defender.getPoints() - 1);
 			}
 			
+			/**
+			 * weird bugs here needs debugging
+			 * i tried TIE Fighter it said -1 points then broke... not sure why
+			 */
 			else if (choice.equals("TIE Fighter") && defender.getPoints() >= TIEFighter.getCost())
 			{
 				BWing bb = new BWing();
@@ -259,11 +263,11 @@ public class Game {
 				player2.takeTurn();
 			}
 			
-			if (input.equals("check turn"))
+			if (input.equals("check turn")) //this will tell you whose turn it is.. idk in case you want to double check?
 			{
 				for (int melon = 0; melon < players.length; melon++)
 				{
-					System.out.println(players[melon].getName() + " is in the game...? " + players[melon].checkTurn());
+					System.out.println(players[melon].getName() + " is turn ...? " + players[melon].checkTurn());
 				}
 			}
 			
@@ -271,7 +275,7 @@ public class Game {
 			
 			
 			if (input.equals("get info"))
-			{
+			{ //thre is probably a smoother way to do this but not sure how
 				System.out.println("please enter y coordinate 1-7");
 				int yCoordinate = s.nextInt();
 				System.out.println("please enter x coordinate 1-15");
@@ -282,7 +286,7 @@ public class Game {
 				}
 				else
 				{
-					if (grid[yCoordinate - 1][xCoordinate - 1] != null) //IK its backwards it needs to be fixed
+					if (grid[yCoordinate - 1][xCoordinate - 1] != null) //IK its backwards it needs to be fixed but work
 					{
 						System.out.println(grid[yCoordinate - 1][xCoordinate - 1].toString());
 					}
@@ -307,7 +311,7 @@ public class Game {
 					System.out.println(player2.shipsControlled());
 				}
 			}
-				
+				//this seems to work ok
 			
 			//how to end turn
 			
