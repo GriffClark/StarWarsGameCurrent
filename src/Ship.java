@@ -25,10 +25,36 @@ public class Ship {
 	protected int damageDodge;
 	protected char graphic;
 	protected static int pointCost;
+	protected int[][] location;
+	protected int x;
+	protected int y;
 	
 	public void setDodgeDamage(int a)
 	{
 		this.damageDodge = a;
+	}
+	
+	public void setLocation(int x, int y)
+	{
+		int[][] monkey = new int[x][y];
+		this.x = x;
+		this.y = y;
+		this.location= monkey;
+	}
+	
+	public int getX()
+	{
+		return x;
+	}
+	
+	public int getY()
+	{
+		return y;
+	}
+	
+	public int[][] getLocation()
+	{
+		return location;
 	}
 	
 	public Ship()

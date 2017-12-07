@@ -15,6 +15,11 @@ public class Player {
 		points = 3;
 	}
 	
+	public Player()
+	{
+		
+	}
+	
 	public void setIsAttacker(boolean i)
 	{
 		this.isAttacker = i;

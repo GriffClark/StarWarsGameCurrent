@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Game {
 	
+	/**
+	 * Should the grid be it's own class??
+	 * @param args
+	 */
+	
 	
 	public static void main (String[] args)
 	{
@@ -60,63 +65,25 @@ public class Game {
 		players[0] = player1;
 		players[1] = player2;
 		
-		Ship[][] grid = new Ship[7][15]; //this will hold the location of all the ships
+		Player agressor = new Player(); //I should probably change player1 and player2 to agressor and defender but just a bit to lazy rn
+		Player defender = new Player();
 		
-		//initializing ships. 2 players one imperial one rebel rebel gets to choose all ships imperial gets simpler choices
-		StarDestroyer destroyer1 = new StarDestroyer();
-		StarDestroyer destroyer2 = new StarDestroyer();
-		DeathStar deathStar = new DeathStar();
-
-		grid[2][0] = destroyer1;
-		grid[4][0] = destroyer2;
-		grid[3][0] = deathStar;
-
-		for (int i = 2; i < 5; i++) //should generate 3 X-Wings
-		{
-			XWing x = new XWing();
-			grid[i][13] = x;
-			xWingSpotter.add(x);
-		}
-
-		//let's see what this looks like
-		for(int i = 0; i < grid.length; i++)
-		{
-			for(int j = 0; j < grid[0].length; j++)
-			{
-				if (grid[i][j] == null)
-				{
-					System.out.print('.' + " ");
-				}
-				else
-				{
-					System.out.print(grid[i][j].getGraphic() + " "); 
-				}
-			}
-			System.out.println();
-		}
 		
-		//to give players control over their ships
-		for(int i = 0; i < players.length; i++)
+		for (int i = 0; i < players.length; i++)
 		{
-			if(players[i].getIsAttacker() == false)
+			if(players[i].getIsAttacker() == true)
 			{
-				players[i].shipsControlled.add(deathStar);
-				players[i].shipsControlled.add(destroyer1);
-				players[i].shipsControlled.add(destroyer2);
-				//default things that defender starts with
+				agressor = players[i];
 			}
+			
+			
 			else
 			{
-				for (int index = 0; index < xWingSpotter.size(); index++)
-				{
-					players[i].shipsControlled.add(xWingSpotter.get(i));
-				}
-			
+				defender = players[i];
 			}
 		}
 		
-		//now to let players choose their ships
-		System.out.println("time to choose your ships. " + player1.getName() + " will go first");
+		System.out.println("time to choose your ships. " + agressor.getName() + " will go first");
 		/**
 		 * right now it does not matter who is attacker or defender. player1 will always choose from the same list of ships. I want the attacker to choose from this list. 
 		 * What is the best way to fix this
@@ -125,21 +92,21 @@ public class Game {
 		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
 		System.out.println("'X Wing', 'B Wing'");
 		
-		while (player1.getPoints() > 0)
+		while (agressor.getPoints() > 0)
 		{
 			String choice = s.nextLine();
-			if (choice.equals("X Wing") && player1.getPoints() >= XWing.getCost())
+			if (choice.equals("X Wing") && agressor.getPoints() >= XWing.getCost())
 			{
 				XWing x = new XWing();
-				player1.shipsControlled.add(x);
-				player1.setPoints(player1.getPoints() - 1);
+				agressor.shipsControlled.add(x);  //agressor can be player1 or player2
+				agressor.setPoints(agressor.getPoints() - 1);
 			}
 			
-			else if (choice.equals("B Wing") && player1.getPoints() >= BWing.getCost())
+			else if (choice.equals("B Wing") && agressor.getPoints() >= BWing.getCost())
 			{
 				BWing bb = new BWing();
-				player1.shipsControlled.add(bb);
-				player1.setPoints(player1.getPoints() - 1);
+				agressor.shipsControlled.add(bb);
+				agressor.setPoints(agressor.getPoints() - 1);
 			}
 			
 			else if (choice.equals("break"))
@@ -151,33 +118,33 @@ public class Game {
 			{
 				System.out.println("invalid name. Try again or type 'break'");
 			}
-			System.out.println("Current points = " +player1.getPoints());
-			System.out.println("Current ships = " + player1.shipsControlled());
+			System.out.println("Current points = " +agressor.getPoints());
+			System.out.println("Current ships = " + agressor.shipsControlled());
 			
 		}
 		
-		System.out.println("player 1 done choosing ships \n-------------------------------------------------------");
+		System.out.println("the rebel fleet has been built \n-------------------------------------------------------");
 		
-		System.out.println("time for "  + player2.getName() + " to choose ships");
+		System.out.println("time for "  + defender.getName() + " to choose ships");
 		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
 		System.out.println("TIE Fighter, Star Destroyer");
 
 		
-		while (player2.getPoints() > 0)
+		while (defender.getPoints() > 0)
 		{
 			String choice = s.nextLine();
-			if (choice.equals("Star Destroyer") && player2.getPoints() >= StarDestroyer.getCost())
+			if (choice.equals("Star Destroyer") && defender.getPoints() >= StarDestroyer.getCost())
 			{
 				XWing x = new XWing();
-				player1.shipsControlled.add(x);
-				player1.setPoints(player1.getPoints() - 1);
+				defender.shipsControlled.add(x);
+				defender.setPoints(defender.getPoints() - 1);
 			}
 			
-			else if (choice.equals("TIE Fighter") && player2.getPoints() >= TIEFighter.getCost())
+			else if (choice.equals("TIE Fighter") && defender.getPoints() >= TIEFighter.getCost())
 			{
 				BWing bb = new BWing();
-				player1.shipsControlled.add(bb);
-				player1.setPoints(player1.getPoints() - 1);
+				defender.shipsControlled.add(bb);
+				defender.setPoints(player1.getPoints() - 1);
 			}
 			
 			else if (choice.equals("break"))
@@ -189,9 +156,86 @@ public class Game {
 			{
 				System.out.println("invalid name or cost. Try again or type 'break'");
 			}
-			System.out.println("Current points = " +player1.getPoints());
-			System.out.println("Current ships = " + player1.shipsControlled());
+			System.out.println("Current points = " +defender.getPoints());
+			System.out.println("Current ships = " + defender.shipsControlled());
 		}
+		System.out.println("the imperial fleet has been built. Let the game begin!");
+		
+		Ship[][] grid = new Ship[7][15]; //should the grid be it's own class and not just a 2d array of ships?
+		
+		//initializing ships. 2 players one imperial one rebel rebel gets to choose all ships imperial gets simpler choices
+		StarDestroyer destroyer1 = new StarDestroyer();
+		StarDestroyer destroyer2 = new StarDestroyer();
+		DeathStar deathStar = new DeathStar();
+
+		destroyer1.setLocation(2, 0);
+		destroyer2.setLocation(4, 0);
+		deathStar.setLocation(3,0);
+
+		for (int i = 2; i < 5; i++) //should generate 3 X-Wings
+		{
+			XWing x = new XWing();
+			x.setLocation(i, 13);
+			xWingSpotter.add(x);
+		}
+
+		
+		for (int i = 0; i < player1.shipsControlled.size(); i++) 
+		{
+			grid[player1.shipsControlled.get(i).getX()][player1.shipsControlled.get(i).getY()] = player1.shipsControlled.get(i);
+		}
+		
+		/*
+		 * this goes and gets the location of every ship a player controls and puts it on the grid
+		 */
+		
+		for (int i = 0; i < player2.shipsControlled.size(); i++)
+		{
+			grid[player2.shipsControlled.get(i).getX()][player2.shipsControlled.get(i).getY()] = player2.shipsControlled.get(i);
+		}
+		
+		/**
+		 * this is currently not printing to grid. The grid is acting as if there is nothing here. Needs to be examined
+		 * also make a print grid option in the game loop
+		 */
+		
+		
+		//to give players control over their ships
+		for(int i = 0; i < players.length; i++)
+		{
+			if(players[i].getIsAttacker() == false)
+			{
+				players[i].shipsControlled.add(deathStar);
+				players[i].shipsControlled.add(destroyer1);
+				players[i].shipsControlled.add(destroyer2);
+				//default things that defender starts with
+			}
+			else if (players[i].getIsAttacker() == true)
+			{
+				for (int index = 0; index < xWingSpotter.size(); index++)
+				{
+					players[i].shipsControlled.add(xWingSpotter.get(i));
+				}
+			
+			}
+		}
+		
+		//let's see what this looks like
+				for(int i = 0; i < grid.length; i++)
+				{
+					for(int j = 0; j < grid[0].length; j++)
+					{
+						
+							System.out.print('.' + " ");
+						
+					
+					}
+					System.out.println();
+				}
+				
+		
+		//now to let players choose their ships
+		
 		
 		
 		//the game loop
