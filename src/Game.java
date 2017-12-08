@@ -11,7 +11,7 @@ public class Game {
 	public static void main (String[] args)
 	{
 		
-		Scanner s = new Scanner(System.in);
+		Scanner keyboard = new Scanner(System.in);
 		Player[] players = new Player[2];
 		/**
 		 * initialize board
@@ -24,13 +24,13 @@ public class Game {
 		 */
 		
 		System.out.println("enter player 1 name");
-		String barley = s.nextLine();
+		String barley = keyboard.nextLine();
 		Player player1 = new Player(barley);
 		int breaker = 0;
 		while (breaker == 0)
 		{
 		System.out.println("enter player 2 name");
-		barley = s.nextLine();
+		barley = keyboard.nextLine();
 		//to ensure no repeats
 		if (barley.equals(player1.getName()))
 		{
@@ -92,7 +92,7 @@ public class Game {
 		
 		while (agressor.getPoints() > 0) //as long as you have points you can keep buying ships
 		{
-			String choice = s.nextLine();
+			String choice = keyboard.nextLine();
 			if (choice.equals("X Wing") && agressor.getPoints() >= XWing.getCost())
 			{
 				XWing x = new XWing();
@@ -134,7 +134,7 @@ public class Game {
 		
 		while (defender.getPoints() > 0)
 		{
-			String choice = s.nextLine();
+			String choice = keyboard.nextLine();
 			if (choice.equals("Star Destroyer") && defender.getPoints() >= StarDestroyer.getCost())
 			{
 				StarDestroyer star = new StarDestroyer();
@@ -177,6 +177,11 @@ public class Game {
 		destroyer1.setLocation(2, 0);
 		destroyer2.setLocation(4, 0);
 		deathStar.setLocation(3,0);
+		
+		defender.shipsControlled.add(deathStar);
+		defender.shipsControlled.add(destroyer1);
+		defender.shipsControlled.add(destroyer2);
+		//default things that defender starts with
 
 		for (int i = 2; i < 5; i++) //should generate 3 X-Wings to place in the middle of the 14th column
 		{
@@ -207,11 +212,7 @@ public class Game {
 		
 		
 		//to give players control over their ships
-	
-				defender.shipsControlled.add(deathStar);
-				defender.shipsControlled.add(destroyer1);
-				defender.shipsControlled.add(destroyer2);
-				//default things that defender starts with
+
 		
 		//let's see what this looks like
 		
@@ -241,6 +242,9 @@ public class Game {
 
 			}
 				System.out.println();
+				/**
+				 * the first time this prints it puts a random agressor ship at [0][0] for no apparent reason
+				 */
 		}
 			
 		/*
@@ -261,7 +265,7 @@ public class Game {
 				
 				System.out.println("input which row you would like to place your ship. \n valid rows are 1-14 \nvalid columns are 14 & 15");
 				
-				int input = s.nextInt();
+				int input = keyboard.nextInt();
 				 if (input <= 7 && input > 0)
 				 {
 					 x = input - 1; //because the grid goes 0-14 and 0-6 
@@ -273,7 +277,7 @@ public class Game {
 				 }
 				 
 				 System.out.println("now place your ship in column 14 or column 15");
-				 
+				 input = keyboard.nextInt();
 				 if(input == 14 || input == 15)
 				 {
 					 y = input - 1;
@@ -294,23 +298,26 @@ public class Game {
 				 
 			}
 			//re print grid
-			for(int index = 0; i < grid.length; i++)
+			for(int v = 0; v < grid.length; i++)
 			{
-				for(int j = 0; j < grid[0].length; j++)
+				for(int w = 0; w < grid[0].length; w++)
 				{
-					if (grid[index][j] == null)
+					if (grid[v][w] == null)
 					{
 						System.out.print('.' + " ");
 					}
 					else
 					{
-						System.out.print(grid[index][j].getGraphic() + " ");
+						System.out.print(grid[v][w].getGraphic() + " ");
 					}
+					/**
+					 * something here broke because it is repeating row 1 over and over with an agressor ship at location [0][0]
+					 */
 
 				}
 					System.out.println();
 			}
-		}
+		} //end looping through ships that agressor controls
 		
 		
 		//the game loop
@@ -320,7 +327,7 @@ public class Game {
 			
 			while(input != "pass turn") // this doesn't work
 			{
-				input = s.nextLine();
+				input = keyboard.nextLine();
 		{
 			if (turnCounter > 0 && turnCounter%2 == 1)
 			{
@@ -348,9 +355,9 @@ public class Game {
 			if (input.equals("get info"))
 			{ //thre is probably a smoother way to do this but not sure how
 				System.out.println("please enter y coordinate 1-7");
-				int yCoordinate = s.nextInt();
+				int yCoordinate = keyboard.nextInt();
 				System.out.println("please enter x coordinate 1-15");
-				int xCoordinate = s.nextInt();
+				int xCoordinate = keyboard.nextInt();
 				if(yCoordinate > 7 || xCoordinate > 15)
 				{
 					System.out.println("unhandled out of bounds error. Please do other things");
@@ -372,7 +379,7 @@ public class Game {
 			if (input.equals("display ships")) //not else if because people can do multiple things per turn
 			{
 				System.out.println("for which player?");
-				input = s.nextLine(); //need to make another check here
+				input = keyboard.nextLine(); //need to make another check here
 				if(input.equals(player1.getName()))
 				{
 					System.out.println(player1.shipsControlled() + "\t");
@@ -380,6 +387,29 @@ public class Game {
 				else if (input.equals(player2.getName()))
 				{
 					System.out.println(player2.shipsControlled());
+				}
+			}
+			
+			if (input.equals("move ship"))
+			{
+				for(int i = 0; i < players.length; i++)
+				{
+					if(players[i].checkTurn() == true)
+					{
+						System.out.println("list of avalable ships:");
+						for (int p = 0; p < players[i].shipsControlled.size(); p++) //side note am I accessing Player.shipsControlled correctly?
+						{
+							System.out.println(players[i].shipsControlled.get(p).toString());
+						}
+						System.out.println("type the location of a ship you would like to move:"); //is this the best way to get them to move a ship?
+						input = keyboard.nextLine();
+						
+						/**
+						 * they input a location you get the speed and they can move the ship that many squares if they control it then re print the grid each time so they can see
+						 * handle out of bounds error
+						 * handle colison error
+						 */
+					}
 				}
 			}
 				//this seems to work ok
