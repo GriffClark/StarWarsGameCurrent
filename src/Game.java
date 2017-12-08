@@ -11,8 +11,6 @@ public class Game {
 	public static void main (String[] args)
 	{
 		
-		ArrayList<Ship> xWingSpotter = new ArrayList<Ship>();
-
 		Scanner s = new Scanner(System.in);
 		Player[] players = new Player[2];
 		/**
@@ -102,7 +100,7 @@ public class Game {
 				agressor.setPoints(agressor.getPoints() - 1);
 			}
 			
-			else if (choice.equals("B Wing") && agressor.getPoints() >= BWing.getCost())
+			else if (choice.equals("B Wing") && agressor.getPoints() >= TIEFighter.getCost())
 			{
 				BWing bb = new BWing();
 				agressor.shipsControlled.add(bb);
@@ -125,6 +123,10 @@ public class Game {
 		
 		System.out.println("the rebel fleet has been built \n-------------------------------------------------------");
 		
+		/**
+		 * bugs persist here need someone else to look it over to see if there is a better way of doing this
+		 */
+		
 		System.out.println("time for "  + defender.getName() + " to choose ships");
 		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
 		System.out.println("TIE Fighter, Star Destroyer");
@@ -135,8 +137,8 @@ public class Game {
 			String choice = s.nextLine();
 			if (choice.equals("Star Destroyer") && defender.getPoints() >= StarDestroyer.getCost())
 			{
-				XWing x = new XWing();
-				defender.shipsControlled.add(x);
+				StarDestroyer star = new StarDestroyer();
+				defender.shipsControlled.add(star);
 				defender.setPoints(defender.getPoints() - 1);
 			}
 			
@@ -146,9 +148,9 @@ public class Game {
 			 */
 			else if (choice.equals("TIE Fighter") && defender.getPoints() >= TIEFighter.getCost())
 			{
-				BWing bb = new BWing();
-				defender.shipsControlled.add(bb);
-				defender.setPoints(player1.getPoints() - 1);
+				TIEFighter tie = new TIEFighter();
+				defender.shipsControlled.add(tie);
+				defender.setPoints(defender.getPoints() - 1);
 			}
 			
 			else if (choice.equals("break"))
@@ -176,26 +178,26 @@ public class Game {
 		destroyer2.setLocation(4, 0);
 		deathStar.setLocation(3,0);
 
-		for (int i = 2; i < 5; i++) //should generate 3 X-Wings
+		for (int i = 2; i < 5; i++) //should generate 3 X-Wings to place in the middle of the 14th column
 		{
 			XWing x = new XWing();
 			x.setLocation(i, 13);
-			xWingSpotter.add(x);
+			agressor.shipsControlled.add(x);
 		}
 
 		
-		for (int i = 0; i < player1.shipsControlled.size(); i++) 
+		for (int i = 0; i < agressor.shipsControlled.size(); i++) 
 		{
-			grid[player1.shipsControlled.get(i).getX()][player1.shipsControlled.get(i).getY()] = player1.shipsControlled.get(i);
+			grid[agressor.shipsControlled.get(i).getX()][agressor.shipsControlled.get(i).getY()] = agressor.shipsControlled.get(i); //should put every agressor ship on the grid
 		}
 		
 		/*
 		 * this goes and gets the location of every ship a player controls and puts it on the grid
 		 */
 		
-		for (int i = 0; i < player2.shipsControlled.size(); i++)
+		for (int i = 0; i < defender.shipsControlled.size(); i++)
 		{
-			grid[player2.shipsControlled.get(i).getX()][player2.shipsControlled.get(i).getY()] = player2.shipsControlled.get(i);
+			grid[defender.shipsControlled.get(i).getX()][defender.shipsControlled.get(i).getY()] = defender.shipsControlled.get(i);
 		}
 		
 		/**
@@ -205,41 +207,110 @@ public class Game {
 		
 		
 		//to give players control over their ships
-		for(int i = 0; i < players.length; i++)
-		{
-			if(players[i].getIsAttacker() == false)
-			{
-				players[i].shipsControlled.add(deathStar);
-				players[i].shipsControlled.add(destroyer1);
-				players[i].shipsControlled.add(destroyer2);
+	
+				defender.shipsControlled.add(deathStar);
+				defender.shipsControlled.add(destroyer1);
+				defender.shipsControlled.add(destroyer2);
 				//default things that defender starts with
-			}
-			else if (players[i].getIsAttacker() == true)
+		
+		//let's see what this looks like
+		
+		for (int index = 0; index < players.length; index++)
+		{
+			for (int t = 0; t < players[index].shipsControlled.size(); t++)
 			{
-				for (int index = 0; index < xWingSpotter.size(); index++)
-				{
-					players[i].shipsControlled.add(xWingSpotter.get(i));
-				}
-			
+				int x = players[index].shipsControlled.get(t).getX();
+				int y = players[index].shipsControlled.get(t).getY();
+				grid[x][y] = players[index].shipsControlled.get(t);
 			}
 		}
 		
-		//let's see what this looks like
-				for(int i = 0; i < grid.length; i++)
+	
+		for(int i = 0; i < grid.length; i++)
+		{
+			for(int j = 0; j < grid[0].length; j++)
+			{
+				if (grid[i][j] == null)
 				{
-					for(int j = 0; j < grid[0].length; j++)
-					{
-						
-							System.out.print('.' + " ");
-						
-					
-					}
-					System.out.println();
+					System.out.print('.' + " ");
 				}
+				else
+				{
+					System.out.print(grid[i][j].getGraphic() + " ");
+				}
+
+			}
+				System.out.println();
+		}
+			
+		/*
+		 * now the players have to place all of the ships that they have  but are not already on the map
+		 */
+		
+		for (int i = 0; i < agressor.shipsControlled.size(); i++) 
+			/**
+			 * multiple bugs here so do not want to make one for defender yet
+			 */
+		{
+			Ship ship = agressor.shipsControlled.get(i); //to shorten everything and make my code easier to read
+			if(ship.getLocation() == null)
+			{
+				int x = 0;
+				int y = 0;
+				System.out.println("set location for " + ship.getName());
 				
-		
-		//now to let players choose their ships
-		
+				System.out.println("input which row you would like to place your ship. \n valid rows are 1-14 \nvalid columns are 14 & 15");
+				
+				int input = s.nextInt();
+				 if (input <= 7 && input > 0)
+				 {
+					 x = input - 1; //because the grid goes 0-14 and 0-6 
+				 }
+				 
+				 else
+				 {
+					 System.out.println ("error invalid row"); //what should I do to handle this. While loop?
+				 }
+				 
+				 System.out.println("now place your ship in column 14 or column 15");
+				 
+				 if(input == 14 || input == 15)
+				 {
+					 y = input - 1;
+				 }
+				 else
+				 {
+					 System.out.println ("error invalid column");
+				 }
+				 
+				 if (grid[x][y] == null)
+				 {
+					 ship.setLocation(x, y);
+				 }
+				 else
+				 {
+					 System.out.println("error already ship at location");
+				 }
+				 
+			}
+			//re print grid
+			for(int index = 0; i < grid.length; i++)
+			{
+				for(int j = 0; j < grid[0].length; j++)
+				{
+					if (grid[index][j] == null)
+					{
+						System.out.print('.' + " ");
+					}
+					else
+					{
+						System.out.print(grid[index][j].getGraphic() + " ");
+					}
+
+				}
+					System.out.println();
+			}
+		}
 		
 		
 		//the game loop
