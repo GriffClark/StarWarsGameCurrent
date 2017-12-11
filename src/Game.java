@@ -97,14 +97,14 @@ public class Game {
 			{
 				XWing x = new XWing();
 				agressor.shipsControlled.add(x);  //agressor can be player1 or player2
-				agressor.setPoints(agressor.getPoints() - 1);
+				agressor.setPoints(agressor.getPoints() - XWing.getCost());
 			}
 			
 			else if (choice.equals("B Wing") && agressor.getPoints() >= TIEFighter.getCost())
 			{
 				BWing bb = new BWing();
 				agressor.shipsControlled.add(bb);
-				agressor.setPoints(agressor.getPoints() - 1);
+				agressor.setPoints(agressor.getPoints() - BWing.getCost());
 			}
 			
 			else if (choice.equals("break"))
@@ -139,7 +139,7 @@ public class Game {
 			{
 				StarDestroyer star = new StarDestroyer();
 				defender.shipsControlled.add(star);
-				defender.setPoints(defender.getPoints() - 1);
+				defender.setPoints(defender.getPoints() - StarDestroyer.getCost());
 			}
 			
 			/**
@@ -150,7 +150,7 @@ public class Game {
 			{
 				TIEFighter tie = new TIEFighter();
 				defender.shipsControlled.add(tie);
-				defender.setPoints(defender.getPoints() - 1);
+				defender.setPoints(defender.getPoints() - TIEFighter.getCost());
 			}
 			
 			else if (choice.equals("break"))
@@ -216,6 +216,12 @@ public class Game {
 		
 		//let's see what this looks like
 		
+		/**
+		 * there is some index math here that needs fixing
+		 * probably the best way to fix that is to get some graph paper and just write it out
+		 * need to actually take time to think this through though 
+		 */
+		
 		for (int index = 0; index < players.length; index++)
 		{
 			for (int t = 0; t < players[index].shipsControlled.size(); t++)
@@ -257,6 +263,7 @@ public class Game {
 			 */
 		{
 			Ship ship = agressor.shipsControlled.get(i); //to shorten everything and make my code easier to read
+			//also note that I need to make this for defender too
 			if(ship.getLocation() == null)
 			{
 				int x = 0;
@@ -269,6 +276,9 @@ public class Game {
 				 if (input <= 7 && input > 0)
 				 {
 					 x = input - 1; //because the grid goes 0-14 and 0-6 
+					 /**
+					  * again double check this math
+					  */
 				 }
 				 
 				 else
