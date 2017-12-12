@@ -11,10 +11,10 @@
 		 * how do I fire a torpedo at the death star?
 		 */
 
-
+import java.util.Scanner;
 //how do I get distance like if a ship is 2 units from another ship it can do a thing??
 public class Ship {
-	
+	Scanner keyboard = new Scanner(System.in);
 	protected int health;
 	protected int attack;
 	protected int range;
@@ -27,21 +27,68 @@ public class Ship {
 	protected static int pointCost;
 	protected int x;
 	protected int y;
+	protected int[][] location;
+	
+	/**
+	 * Somewhere here I think I need to store the location of the ship
+	 * do I?
+	 * Also what is the best way to do that? 
+	 * @param a
+	 */
 	
 	public void setDodgeDamage(int a)
 	{
 		this.damageDodge = a;
 	}
 	
-	public void setLocation(int x, int y)
+	public void setLocation(int happi, int fish)
 	{
-		this.x = x;
-		this.y = y;
+		location = new int[happi][fish];
+		this.x = happi;
+		this.y = fish;
 	}
+	
+	public int[][] getLocation()
+	{
+		return location;
+	}
+
 	
 	public int getX()
 	{
 		return x;
+	}
+	
+	public String[] move()
+	{
+		String[] movements = new String[speed];
+		int moveCounters = speed;
+		for (int i = 0; i < speed; i++) {
+			
+			int breaker = 0;
+			while (breaker == 0) {
+				System.out.println("this ship can move " + moveCounters + " more time(s)");
+				System.out.println ("would you like to move 'north' 'south' 'east' 'west'");
+				//or should I do up down left right?
+				String input = keyboard.nextLine();
+				
+				if (input.equals("north") || input.equals("south" )|| input.equals("east") || input.equals("west"))
+				{
+					System.out.println("legal move in the " + input + " direction");
+					movements[i] = input;
+					breaker++;
+					continue;
+				}
+				else
+				{
+					System.out.println("please enter a valad direction");
+					continue;
+				}
+			}
+			
+		}
+		return movements;
+
 	}
 	
 	public int getY()

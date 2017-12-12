@@ -59,9 +59,9 @@ public class Grid {
 		return rows;
 	}
 	
-	public boolean isEmpty(int x, int y)
+	public boolean isEmpty(int t, int c)
 	{
-		if (grid[x][y] == null)
+		if (grid[t][c] == null)
 		{
 			return true;
 		}

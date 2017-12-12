@@ -121,6 +121,11 @@ public class Game {
 		
 		while (agressor.getPoints() > 0) //as long as you have points you can keep buying ships
 		{
+			
+			/**
+			 * need to restrict where ships can be placed (only in columns 14 and 15
+			 */
+			
 			int x = 0;
 			int y = 0;
 			String choice = keyboard.nextLine();
@@ -140,9 +145,13 @@ public class Game {
 					grid.placeShip(monkey, x, y);
 					tortuse++;
 				}
+				/**
+				 * I sense there is a more efficient way to do this check here and only needing to type some of this stuff once... Gri
+				 */
 				else
 				{
 					System.out.println("location invalid ship already there");
+					break;
 				}
 			}
 			}
@@ -167,6 +176,7 @@ public class Game {
 				else
 				{
 					System.out.println("location invalid ship already there");
+					break;
 				}
 			}
 			}
@@ -231,7 +241,14 @@ public class Game {
 			System.out.println("Current points = " +defender.getPoints());
 			System.out.println("Current ships = " + defender.shipsControlled());
 		}
-		System.out.println("the imperial fleet has been built. Let the game begin!");
+		System.out.println("would you like to print screen? 'y' 'n'");
+		String input = keyboard.nextLine();
+		if (input.equals("y"))
+		{
+			grid.printGrid();
+		}
+		
+		
 		
 		
 		//initializing ships. 2 players one imperial one rebel rebel gets to choose all ships imperial gets simpler choices
@@ -266,19 +283,18 @@ public class Game {
 		
 		
 		//the game loop
-		String input = null;
 		int turnCounter = 0;
 		while(true)
 			
 			while(input != "pass turn") // this doesn't work
-			{
-				input = keyboard.nextLine();
-		{
+				{
+					input = keyboard.nextLine();
+				{
 			if (turnCounter > 0 && turnCounter%2 == 1)
-			{
-				player1.takeTurn();
-				player2.passTurn();
-			}
+				{
+					player1.takeTurn();
+					player2.passTurn();
+				}
 			
 			else if (turnCounter  == 0 || turnCounter%2 == 0)
 			{
@@ -316,7 +332,7 @@ public class Game {
 				
 			}
 			
-			if (input.equals("display ships")) //not else if because people can do multiple things per turn
+			else if (input.equals("display ships")) //not else if because people can do multiple things per turn
 			{
 				System.out.println("for which player?");
 				input = keyboard.nextLine(); //need to make another check here
@@ -330,7 +346,7 @@ public class Game {
 				}
 			}
 			
-			if (input.equals("move ship"))
+			else if (input.equals("move ship"))
 			{
 				for(int i = 0; i < players.length; i++)
 				{
