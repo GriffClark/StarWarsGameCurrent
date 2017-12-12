@@ -24,7 +24,7 @@ public class Ship {
 	protected Player owner;
 	protected int damageDodge;
 	protected char graphic;
-	protected static int pointCost;
+	protected static double pointCost;
 	protected int x;
 	protected int y;
 	protected int[][] location;
@@ -102,17 +102,12 @@ public class Ship {
 		
 	}
 	
-	public int getPointCost()
-	{
-		return pointCost;
-	}
-	
-	public void setPointCost(int pointCost)
+	public void setPointCost(double pointCost)
 	{
 		this.pointCost = pointCost;
 	}
 	
-	public static int getCost()
+	public static double getCost()
 	{
 		return pointCost;
 	}

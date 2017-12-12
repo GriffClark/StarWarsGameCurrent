@@ -9,6 +9,7 @@ public class XWing extends Ship{
 		name = "X Wing";
 		range = 3;
 		graphic = 'X';
+		pointCost = 1;
 	}
 	
 	@Override

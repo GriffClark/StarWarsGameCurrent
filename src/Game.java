@@ -123,18 +123,26 @@ public class Game {
 		{
 			
 			/**
-			 * need to restrict where ships can be placed (only in columns 14 and 15
+			 * need to restrict where ships can be placed (only in columns 14 and 15)
+			 * Also the print statements are a bit screwey but that can be dealt with later
 			 */
 			
 			int x = 0;
 			int y = 0;
+			System.out.println("would you like to print screen? 'y' 'n'");
 			String choice = keyboard.nextLine();
+			if (choice.equals("y"))
+			{
+				grid.printGrid();
+			}
+			System.out.println("now choose a ship");
+			choice = keyboard.nextLine();
 			if (choice.equals("X Wing") && agressor.getPoints() >= XWing.getCost())
 			{
-				XWing monkey = new XWing();
-				agressor.shipsControlled.add(monkey);  //agressor can be player1 or player2
-				agressor.setPoints(agressor.getPoints() - XWing.getCost());
-				System.out.println("place ship 'x''y'");
+				XWing xWing = new XWing();
+				agressor.shipsControlled.add(xWing);  //agressor can be player1 or player2
+				agressor.removePoints(xWing.getCost());
+				System.out.println("place ship in row major order");
 				x = keyboard.nextInt();
 				y = keyboard.nextInt();
 				int tortuse = 0;
@@ -142,7 +150,7 @@ public class Game {
 				while (tortuse == 0) {
 				if(grid.isEmpty(x, y) == true)
 				{
-					grid.placeShip(monkey, x, y);
+					grid.placeShip(xWing, x, y);
 					tortuse++;
 				}
 				/**
@@ -158,11 +166,11 @@ public class Game {
 			
 			else if (choice.equals("B Wing") && agressor.getPoints() >= TIEFighter.getCost())
 			{
-				BWing bb = new BWing();
-				agressor.shipsControlled.add(bb);
-				agressor.setPoints(agressor.getPoints() - BWing.getCost());
+				BWing bWing = new BWing();
+				agressor.shipsControlled.add(bWing);
+				agressor.removePoints(bWing.getCost());;
 				
-				System.out.println("place ship 'x''y'");
+				System.out.println("place ship in row major order");
 				x = keyboard.nextInt();
 				y = keyboard.nextInt();
 				int tortuse = 0;
@@ -170,17 +178,17 @@ public class Game {
 				while (tortuse == 0) {
 				if(grid.isEmpty(x, y) == true)
 				{
-					grid.placeShip(bb, x, y);
+					grid.placeShip(bWing, x, y);
 					tortuse++;
 				}
 				else
 				{
 					System.out.println("location invalid ship already there");
-					break;
+					continue;
 				}
 			}
 			}
-			
+
 			else if (choice.equals("break"))
 			{
 				break;
@@ -204,31 +212,80 @@ public class Game {
 		System.out.println("time for "  + defender.getName() + " to choose ships");
 		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
 		System.out.println("TIE Fighter, Star Destroyer");
-
 		
-		while (defender.getPoints() > 0)
+		while (defender.getPoints() > 0) //as long as you have points you can keep buying ships
 		{
-			int x = 0;
-			int y = 0;
-			String choice = keyboard.nextLine();
-			if (choice.equals("Star Destroyer") && defender.getPoints() >= StarDestroyer.getCost())
-			{
-				StarDestroyer star = new StarDestroyer();
-				defender.shipsControlled.add(star);
-				defender.setPoints(defender.getPoints() - StarDestroyer.getCost());
-			}
 			
 			/**
-			 * weird bugs here needs debugging
-			 * i tried TIE Fighter it said -1 points then broke... not sure why
+			 * need to restrict where ships can be placed (only in columns 14 and 15)
+			 * Also the print statements are a bit screwey but that can be dealt with later
 			 */
-			else if (choice.equals("TIE Fighter") && defender.getPoints() >= TIEFighter.getCost())
+			
+			int x = 0;
+			int y = 0;
+			System.out.println("would you like to print screen? 'y' 'n'");
+			String choice = keyboard.nextLine();
+			if (choice.equals("y"))
+			{
+				grid.printGrid();
+			}
+			System.out.println("now choose a ship");
+			choice = keyboard.nextLine();
+			if (choice.equals("TIE Fighter") && agressor.getPoints() >= XWing.getCost())
 			{
 				TIEFighter tie = new TIEFighter();
-				defender.shipsControlled.add(tie);
-				defender.setPoints(defender.getPoints() - TIEFighter.getCost());
+				defender.shipsControlled.add(tie);  
+				defender.removePoints(tie.getCost());
+				System.out.println("place ship in row major order");
+				x = keyboard.nextInt();
+				y = keyboard.nextInt();
+				int breakable = 0;
+				
+				while (breakable == 0) {
+				if(grid.isEmpty(x, y) == true)
+				{
+					grid.placeShip(tie, x, y);
+					breakable++;
+				}
+				/**
+				 * I sense there is a more efficient way to do this check here and only needing to type some of this stuff once... Gri
+				 */
+				else
+				{
+					System.out.println("location invalid ship already there");
+					break;
+				}
 			}
+			}
+			/**
+			 * this just flat out does not work
+			 */
 			
+			else if (choice.equals("Star Destroyer") && agressor.getPoints() >= TIEFighter.getCost())
+			{
+				StarDestroyer starDestroyer = new StarDestroyer();
+				defender.shipsControlled.add(starDestroyer);
+				defender.removePoints(starDestroyer.getCost());;
+				
+				System.out.println("place ship in row major order");
+				x = keyboard.nextInt();
+				y = keyboard.nextInt();
+				int tortuse = 0;
+				
+				while (tortuse == 0) {
+				if(grid.isEmpty(x, y) == true)
+				{
+					grid.placeShip(starDestroyer, x, y);
+					tortuse++;
+				}
+				else
+				{
+					System.out.println("location invalid ship already there");
+					continue;
+				}
+			}
+			}
+
 			else if (choice.equals("break"))
 			{
 				break;
@@ -236,21 +293,19 @@ public class Game {
 			
 			else
 			{
-				System.out.println("invalid name or cost. Try again or type 'break'");
+				System.out.println("invalid name. Try again or type 'break'");
 			}
 			System.out.println("Current points = " +defender.getPoints());
 			System.out.println("Current ships = " + defender.shipsControlled());
-		}
+			
+			
 		System.out.println("would you like to print screen? 'y' 'n'");
 		String input = keyboard.nextLine();
 		if (input.equals("y"))
 		{
 			grid.printGrid();
 		}
-		
-		
-		
-		
+
 		//initializing ships. 2 players one imperial one rebel rebel gets to choose all ships imperial gets simpler choices
 		
 
@@ -313,7 +368,7 @@ public class Game {
 			System.out.println ("Game is running. \n" + turnCounter + " turns taken");
 			
 			
-			if (input.equals("get info"))
+			if (input.equals("get info")) //also note that this does not work and print statement should be added in here somewhere 
 			{ //thre is probably a smoother way to do this but not sure how
 				System.out.println("please enter x coordinate 1-15");
 				int xCoordinate = keyboard.nextInt();
@@ -377,4 +432,5 @@ public class Game {
 		
 	}//ends game loop
 
+	}
 }

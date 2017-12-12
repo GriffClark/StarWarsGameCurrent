@@ -12,6 +12,7 @@ public class StarDestroyer extends Ship{
 		speed = 2;
 		range = 5;
 		graphic = 'S';
+		pointCost = 2;
 		
 //		shipType = destroyer; why does this not work?
 	}

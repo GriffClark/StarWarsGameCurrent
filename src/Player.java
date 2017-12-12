@@ -6,7 +6,7 @@ public class Player {
 	protected boolean myTurn;
 	protected boolean inTheGame;
 	protected boolean isAttacker = false; //default false will set one to true
-	protected int points;
+	protected double points;
 	
 	public Player(String name)
 	{
@@ -43,12 +43,22 @@ public class Player {
 		return myTurn;
 	}
 	
-	public void setPoints (int points)
+	public void setPoints (double points)
 	{
 		this.points = points;
 	}
 	
-	public int getPoints()
+	public void removePoints(double points)
+	{
+		this.points -= points;
+	}
+	
+	public void removePoints(int removable)
+	{
+		this.points -= points;
+	}
+	
+	public double getPoints()
 	{
 		return points;
 	}

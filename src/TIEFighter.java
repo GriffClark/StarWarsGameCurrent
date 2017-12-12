@@ -10,6 +10,7 @@ public class TIEFighter extends Ship{
 			name = "TIE Fighter";
 			range = 2;
 			graphic = 'T';
+			pointCost = 0.5;
 		
 	}
 
