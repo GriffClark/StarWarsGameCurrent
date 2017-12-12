@@ -3,8 +3,7 @@ import java.util.Scanner;
 public class Game {
 	
 	/**
-	 * Should the grid be it's own class??
-	 * @param args
+	 *What is the best way to clean this up? What should be it's own class?
 	 */
 	
 	
@@ -43,6 +42,8 @@ public class Game {
 		}
 		Player player2 = new Player(barley);
 		
+
+
 		//now to determine who is attacker and who is defender
 		
 		int coin = (int)(Math.random() * 10);
@@ -65,8 +66,7 @@ public class Game {
 		
 		Player agressor = new Player(); //I should probably change player1 and player2 to agressor and defender but just a bit to lazy rn
 		Player defender = new Player();
-		
-		
+
 		for (int i = 0; i < players.length; i++)
 		{
 			if(players[i].getIsAttacker() == true)
@@ -74,12 +74,41 @@ public class Game {
 				agressor = players[i];
 			}
 			
+			//this is setting one player as attacker and one player as defender
 			
 			else
 			{
 				defender = players[i];
 			}
 		}
+		
+		//initializing the grid
+		
+		Grid grid = new Grid(7,15);
+		grid.initialize();
+		
+		StarDestroyer destroyer1 = new StarDestroyer();
+		StarDestroyer destroyer2 = new StarDestroyer();
+		DeathStar deathStar = new DeathStar();
+		
+		grid.placeShip(destroyer1, 2, 0);
+		grid.placeShip(destroyer2, 4, 0);
+		grid.placeShip(deathStar, 3, 0);
+		
+		defender.shipsControlled.add(deathStar);
+		defender.shipsControlled.add(destroyer1);
+		defender.shipsControlled.add(destroyer2);
+		//default things that defender starts with
+
+		for (int i = 2; i < 5; i++) //should generate 3 X-Wings to place in the middle of the 14th column
+		{
+			XWing x = new XWing();
+			grid.placeShip(x, i, 13); //should place a X wing along row 13 at whatever i is
+			agressor.shipsControlled.add(x);
+		}
+		System.out.println("\nThings!\n");
+		grid.printGrid();
+		
 		
 		System.out.println("time to choose your ships. " + agressor.getName() + " will go first");
 		/**
@@ -92,12 +121,30 @@ public class Game {
 		
 		while (agressor.getPoints() > 0) //as long as you have points you can keep buying ships
 		{
+			int x = 0;
+			int y = 0;
 			String choice = keyboard.nextLine();
 			if (choice.equals("X Wing") && agressor.getPoints() >= XWing.getCost())
 			{
-				XWing x = new XWing();
-				agressor.shipsControlled.add(x);  //agressor can be player1 or player2
+				XWing monkey = new XWing();
+				agressor.shipsControlled.add(monkey);  //agressor can be player1 or player2
 				agressor.setPoints(agressor.getPoints() - XWing.getCost());
+				System.out.println("place ship 'x''y'");
+				x = keyboard.nextInt();
+				y = keyboard.nextInt();
+				int tortuse = 0;
+				
+				while (tortuse == 0) {
+				if(grid.isEmpty(x, y) == true)
+				{
+					grid.placeShip(monkey, x, y);
+					tortuse++;
+				}
+				else
+				{
+					System.out.println("location invalid ship already there");
+				}
+			}
 			}
 			
 			else if (choice.equals("B Wing") && agressor.getPoints() >= TIEFighter.getCost())
@@ -105,6 +152,23 @@ public class Game {
 				BWing bb = new BWing();
 				agressor.shipsControlled.add(bb);
 				agressor.setPoints(agressor.getPoints() - BWing.getCost());
+				
+				System.out.println("place ship 'x''y'");
+				x = keyboard.nextInt();
+				y = keyboard.nextInt();
+				int tortuse = 0;
+				
+				while (tortuse == 0) {
+				if(grid.isEmpty(x, y) == true)
+				{
+					grid.placeShip(bb, x, y);
+					tortuse++;
+				}
+				else
+				{
+					System.out.println("location invalid ship already there");
+				}
+			}
 			}
 			
 			else if (choice.equals("break"))
@@ -134,6 +198,8 @@ public class Game {
 		
 		while (defender.getPoints() > 0)
 		{
+			int x = 0;
+			int y = 0;
 			String choice = keyboard.nextLine();
 			if (choice.equals("Star Destroyer") && defender.getPoints() >= StarDestroyer.getCost())
 			{
@@ -167,43 +233,15 @@ public class Game {
 		}
 		System.out.println("the imperial fleet has been built. Let the game begin!");
 		
-		Ship[][] grid = new Ship[7][15]; //should the grid be it's own class and not just a 2d array of ships?
 		
 		//initializing ships. 2 players one imperial one rebel rebel gets to choose all ships imperial gets simpler choices
-		StarDestroyer destroyer1 = new StarDestroyer();
-		StarDestroyer destroyer2 = new StarDestroyer();
-		DeathStar deathStar = new DeathStar();
-
-		destroyer1.setLocation(2, 0);
-		destroyer2.setLocation(4, 0);
-		deathStar.setLocation(3,0);
 		
-		defender.shipsControlled.add(deathStar);
-		defender.shipsControlled.add(destroyer1);
-		defender.shipsControlled.add(destroyer2);
-		//default things that defender starts with
 
-		for (int i = 2; i < 5; i++) //should generate 3 X-Wings to place in the middle of the 14th column
-		{
-			XWing x = new XWing();
-			x.setLocation(i, 13);
-			agressor.shipsControlled.add(x);
-		}
-
-		
-		for (int i = 0; i < agressor.shipsControlled.size(); i++) 
-		{
-			grid[agressor.shipsControlled.get(i).getX()][agressor.shipsControlled.get(i).getY()] = agressor.shipsControlled.get(i); //should put every agressor ship on the grid
-		}
 		
 		/*
 		 * this goes and gets the location of every ship a player controls and puts it on the grid
 		 */
 		
-		for (int i = 0; i < defender.shipsControlled.size(); i++)
-		{
-			grid[defender.shipsControlled.get(i).getX()][defender.shipsControlled.get(i).getY()] = defender.shipsControlled.get(i);
-		}
 		
 		/**
 		 * this is currently not printing to grid. The grid is acting as if there is nothing here. Needs to be examined
@@ -221,113 +259,10 @@ public class Game {
 		 * probably the best way to fix that is to get some graph paper and just write it out
 		 * need to actually take time to think this through though 
 		 */
-		
-		for (int index = 0; index < players.length; index++)
-		{
-			for (int t = 0; t < players[index].shipsControlled.size(); t++)
-			{
-				int x = players[index].shipsControlled.get(t).getX();
-				int y = players[index].shipsControlled.get(t).getY();
-				grid[x][y] = players[index].shipsControlled.get(t);
-			}
-		}
-		
-	
-		for(int i = 0; i < grid.length; i++)
-		{
-			for(int j = 0; j < grid[0].length; j++)
-			{
-				if (grid[i][j] == null)
-				{
-					System.out.print('.' + " ");
-				}
-				else
-				{
-					System.out.print(grid[i][j].getGraphic() + " ");
-				}
-
-			}
-				System.out.println();
-				/**
-				 * the first time this prints it puts a random agressor ship at [0][0] for no apparent reason
-				 */
-		}
 			
 		/*
 		 * now the players have to place all of the ships that they have  but are not already on the map
 		 */
-		
-		for (int i = 0; i < agressor.shipsControlled.size(); i++) 
-			/**
-			 * multiple bugs here so do not want to make one for defender yet
-			 */
-		{
-			Ship ship = agressor.shipsControlled.get(i); //to shorten everything and make my code easier to read
-			//also note that I need to make this for defender too
-			if(ship.getLocation() == null)
-			{
-				int x = 0;
-				int y = 0;
-				System.out.println("set location for " + ship.getName());
-				
-				System.out.println("input which row you would like to place your ship. \n valid rows are 1-14 \nvalid columns are 14 & 15");
-				
-				int input = keyboard.nextInt();
-				 if (input <= 7 && input > 0)
-				 {
-					 x = input - 1; //because the grid goes 0-14 and 0-6 
-					 /**
-					  * again double check this math
-					  */
-				 }
-				 
-				 else
-				 {
-					 System.out.println ("error invalid row"); //what should I do to handle this. While loop?
-				 }
-				 
-				 System.out.println("now place your ship in column 14 or column 15");
-				 input = keyboard.nextInt();
-				 if(input == 14 || input == 15)
-				 {
-					 y = input - 1;
-				 }
-				 else
-				 {
-					 System.out.println ("error invalid column");
-				 }
-				 
-				 if (grid[x][y] == null)
-				 {
-					 ship.setLocation(x, y);
-				 }
-				 else
-				 {
-					 System.out.println("error already ship at location");
-				 }
-				 
-			}
-			//re print grid
-			for(int v = 0; v < grid.length; i++)
-			{
-				for(int w = 0; w < grid[0].length; w++)
-				{
-					if (grid[v][w] == null)
-					{
-						System.out.print('.' + " ");
-					}
-					else
-					{
-						System.out.print(grid[v][w].getGraphic() + " ");
-					}
-					/**
-					 * something here broke because it is repeating row 1 over and over with an agressor ship at location [0][0]
-					 */
-
-				}
-					System.out.println();
-			}
-		} //end looping through ships that agressor controls
 		
 		
 		//the game loop
@@ -364,24 +299,19 @@ public class Game {
 			
 			if (input.equals("get info"))
 			{ //thre is probably a smoother way to do this but not sure how
-				System.out.println("please enter y coordinate 1-7");
-				int yCoordinate = keyboard.nextInt();
 				System.out.println("please enter x coordinate 1-15");
 				int xCoordinate = keyboard.nextInt();
+				
+				System.out.println("please enter y coordinate 1-7");
+				int yCoordinate = keyboard.nextInt();
+				
 				if(yCoordinate > 7 || xCoordinate > 15)
 				{
 					System.out.println("unhandled out of bounds error. Please do other things");
 				}
 				else
 				{
-					if (grid[yCoordinate - 1][xCoordinate - 1] != null) //IK its backwards it needs to be fixed but work
-					{
-						System.out.println(grid[yCoordinate - 1][xCoordinate - 1].toString());
-					}
-					else
-					{
-						System.out.println("spot is empty");
-					}
+					grid.finder(xCoordinate, yCoordinate);
 				}
 				
 			}
