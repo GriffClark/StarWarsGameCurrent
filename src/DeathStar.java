@@ -8,13 +8,14 @@ public class DeathStar extends Ship{ //to lazy to make this right now. Also shou
 	
 	public DeathStar()
 	{
-		health = 99999999;
+		health = 1500000000;
 		attack = 10 + ((int)(Math.random() * 200));
 		speed = 0;
 		name = "Death Star";
 		range = 1;
 		graphic = '@'; //idk why just feels right
 		reactorHit = false;
+		allignment = Ship.Allignment.Imperial;
 	}
 	
 	public void chargeDeathRay()

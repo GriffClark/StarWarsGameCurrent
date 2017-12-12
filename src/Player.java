@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 public class Player {
-	
 	protected ArrayList<Ship> shipsControlled = new ArrayList<Ship>();
 	protected String name;
 	protected boolean myTurn;
@@ -12,7 +11,7 @@ public class Player {
 	{
 		this.name = name;
 		inTheGame = true; 
-		points = 3;
+		points = 13;
 	}
 	
 	public Player()
@@ -25,17 +24,24 @@ public class Player {
 		this.isAttacker = i;
 	}
 	
-	public String shipsControlled()
+	public void takeControlOf( Ship ship)
 	{
-		
-		String batman = "";
 		for (int i = 0; i < shipsControlled.size(); i++)
 		{
-			batman += shipsControlled.get(i).toString();
+			//need to find duplicates in the ArrayList and if there are more than 4 get rid of them
+		}
+		shipsControlled.add(ship);
+	}
+	
+	public String printShipsControlled()
+	{
+		String printMe = " ";
+		for (int i = 0; i < shipsControlled.size(); i++)
+		{
+			printMe += shipsControlled.get(i).toString() + " ";
 		}
 		
-		return batman;
-		
+		return printMe;
 	}
 	
 	public boolean checkTurn()
@@ -49,11 +55,6 @@ public class Player {
 	}
 	
 	public void removePoints(double points)
-	{
-		this.points -= points;
-	}
-	
-	public void removePoints(int removable)
 	{
 		this.points -= points;
 	}

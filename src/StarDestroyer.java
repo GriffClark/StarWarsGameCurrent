@@ -13,6 +13,7 @@ public class StarDestroyer extends Ship{
 		range = 5;
 		graphic = 'S';
 		pointCost = 2;
+		allignment = Ship.Allignment.Imperial;
 		
 //		shipType = destroyer; why does this not work?
 	}

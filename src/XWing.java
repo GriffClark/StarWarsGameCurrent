@@ -10,6 +10,7 @@ public class XWing extends Ship{
 		range = 3;
 		graphic = 'X';
 		pointCost = 1;
+		allignment = Ship.Allignment.Rebel;
 	}
 	
 	@Override

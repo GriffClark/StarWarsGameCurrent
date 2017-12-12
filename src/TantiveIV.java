@@ -1,12 +1,12 @@
 
-public class BWing extends Ship{
-	
-	public BWing()
+public class TantiveIV extends Ship{
+
+	public TantiveIV()
 	{
 		health = 120;
 		attack = 60 + (int)(Math.random() * 90);
 		speed = 3;
-		name = "B Wing";
+		name = "Tantive IV";
 		range = 3;
 		graphic = 'B';
 		pointCost = 1.5;
@@ -19,6 +19,5 @@ public class BWing extends Ship{
 		return torpedo; 
 		
 	}
-	
 
 }

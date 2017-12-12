@@ -117,7 +117,7 @@ public class Game {
 		 */
 		
 		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
-		System.out.println("'X Wing', 'B Wing'");
+		System.out.println("'X Wing', 'B Wing' 'Tantive IV'");//there must be a better way to do this based off of ship allignments but not sure how
 		
 		while (agressor.getPoints() > 0) //as long as you have points you can keep buying ships
 		{
@@ -140,7 +140,7 @@ public class Game {
 			if (choice.equals("X Wing") && agressor.getPoints() >= XWing.getCost())
 			{
 				XWing xWing = new XWing();
-				agressor.shipsControlled.add(xWing);  //agressor can be player1 or player2
+				agressor.takeControlOf(xWing);  //agressor can be player1 or player2
 				agressor.removePoints(xWing.getCost());
 				System.out.println("place ship in row major order");
 				x = keyboard.nextInt();
@@ -164,10 +164,17 @@ public class Game {
 			}
 			}
 			
-			else if (choice.equals("B Wing") && agressor.getPoints() >= TIEFighter.getCost())
+			else if (choice.equals("Tantive IV") && agressor.getPoints() >=TantiveIV.getCost())
+			{
+				/**
+				 * do the things
+				 */
+			}
+			
+			else if (choice.equals("B Wing") && agressor.getPoints() >= BWing.getCost())
 			{
 				BWing bWing = new BWing();
-				agressor.shipsControlled.add(bWing);
+				agressor.takeControlOf(bWing);
 				agressor.removePoints(bWing.getCost());;
 				
 				System.out.println("place ship in row major order");
@@ -199,7 +206,7 @@ public class Game {
 				System.out.println("invalid name. Try again or type 'break'");
 			}
 			System.out.println("Current points = " +agressor.getPoints());
-			System.out.println("Current ships = " + agressor.shipsControlled());
+			System.out.println("Current ships = " + agressor.printShipsControlled());
 			
 		}
 		
@@ -234,7 +241,7 @@ public class Game {
 			if (choice.equals("TIE Fighter") && agressor.getPoints() >= XWing.getCost())
 			{
 				TIEFighter tie = new TIEFighter();
-				defender.shipsControlled.add(tie);  
+				defender.takeControlOf(tie);  
 				defender.removePoints(tie.getCost());
 				System.out.println("place ship in row major order");
 				x = keyboard.nextInt();
@@ -264,7 +271,7 @@ public class Game {
 			else if (choice.equals("Star Destroyer") && agressor.getPoints() >= TIEFighter.getCost())
 			{
 				StarDestroyer starDestroyer = new StarDestroyer();
-				defender.shipsControlled.add(starDestroyer);
+				defender.takeControlOf(starDestroyer);
 				defender.removePoints(starDestroyer.getCost());;
 				
 				System.out.println("place ship in row major order");
@@ -296,7 +303,7 @@ public class Game {
 				System.out.println("invalid name. Try again or type 'break'");
 			}
 			System.out.println("Current points = " +defender.getPoints());
-			System.out.println("Current ships = " + defender.shipsControlled());
+			System.out.println("Current ships = " + defender.printShipsControlled());
 			
 			
 		System.out.println("would you like to print screen? 'y' 'n'");
@@ -393,11 +400,11 @@ public class Game {
 				input = keyboard.nextLine(); //need to make another check here
 				if(input.equals(player1.getName()))
 				{
-					System.out.println(player1.shipsControlled() + "\t");
+					System.out.println(player1.printShipsControlled() + "\t");
 				}
 				else if (input.equals(player2.getName()))
 				{
-					System.out.println(player2.shipsControlled());
+					System.out.println(player2.printShipsControlled());
 				}
 			}
 			

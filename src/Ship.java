@@ -11,9 +11,16 @@
 		 * how do I fire a torpedo at the death star?
 		 */
 
+
 import java.util.Scanner;
 //how do I get distance like if a ship is 2 units from another ship it can do a thing??
 public class Ship {
+	
+
+public enum Allignment
+{
+	Rebel, Imperial
+}
 	Scanner keyboard = new Scanner(System.in);
 	protected int health;
 	protected int attack;
@@ -28,6 +35,7 @@ public class Ship {
 	protected int x;
 	protected int y;
 	protected int[][] location;
+	protected Allignment allignment;
 	
 	/**
 	 * Somewhere here I think I need to store the location of the ship
@@ -46,6 +54,11 @@ public class Ship {
 		location = new int[happi][fish];
 		this.x = happi;
 		this.y = fish;
+	}
+	
+	public Allignment getAllignment()
+	{
+		return allignment;
 	}
 	
 	public int[][] getLocation()

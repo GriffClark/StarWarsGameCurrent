@@ -11,6 +11,7 @@ public class TIEFighter extends Ship{
 			range = 2;
 			graphic = 'T';
 			pointCost = 0.5;
+			allignment = Ship.Allignment.Imperial;
 		
 	}
 
