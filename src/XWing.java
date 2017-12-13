@@ -27,6 +27,13 @@ public class XWing extends Ship{
 		{
 			torpedo.setRange(2); //if you are targeting the death star you gotta be closer
 		}
+		
+		/**
+		 * now need a clause to determine the distance of an object and if you are in range
+		 * then need to do something with the torpedo. Should damage be handled inside this method making it void? That might be a better way to handle it
+		 */
+		
+		
 		return torpedo; //this creates a new torpedo which is fired at a ship
 	}
 	

@@ -16,6 +16,9 @@ public class BWing extends Ship{
 	public Torpedo fireTorpedo(Ship target)
 	{
 		Torpedo torpedo = new Torpedo(35, target, "B Wing Torpedo");
+		/**
+		 * refer to comments in x wing class under fireTorpedo()
+		 */
 		return torpedo; 
 		
 	}

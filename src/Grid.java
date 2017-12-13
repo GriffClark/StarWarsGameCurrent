@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 public class Grid {
 	private int rows;
 	private int columns;
@@ -17,15 +17,21 @@ public class Grid {
 	
 	public void placeShip(Ship ship, int x, int y)
 	{
-		if (x > grid.length || y > grid[0].length)
+		int breaker = 0;
+		while (breaker == 0)
 		{
-			System.out.println("overflow error on Grid.placeShip");
+			if (x > grid.length || y > grid[0].length)
+			{
+				System.out.println("overflow error on Grid.placeShip");
+			}
+			else
+			{
+				grid[x][y] = ship;
+				printableGrid[x][y] = grid[x][y].getGraphic(); //printable grid will mirror grid but have representations for blank spaces
+				breaker++;
+			}
 		}
-		else
-		{
-			grid[x][y] = ship;
-			printableGrid[x][y] = grid[x][y].getGraphic(); //printable grid will mirror grid but have representations for blank spaces
-		}
+	
 		
 	}
 	

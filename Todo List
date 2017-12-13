@@ -1,0 +1,9 @@
+Turn ForceField into a class
+	* take parts of ship and TantiveIV and put them into that class (it's where they belong)
+	* update move system and damage system for those ships
+Fix Torpeoes on X Wing and B Wing
+Fix ship selection and all of its many bugs
+Find a way to calculate distance between two points
+Make sure that the current move system works (it is not very efficient and thus not a final system, but it should work for now)
+Fix the game loop to make it easier to work
+Fix the pre game loop to make it actually managable for the average person

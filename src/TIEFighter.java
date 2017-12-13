@@ -5,8 +5,8 @@ public class TIEFighter extends Ship{
 	{
 		
 			health = 30;
-			attack = 10 + (int)(Math.random() * 75);
-			speed = 8;
+			attack = 10 + (int)(Math.random() * 35);
+			speed = 4;
 			name = "TIE Fighter";
 			range = 2;
 			graphic = 'T';

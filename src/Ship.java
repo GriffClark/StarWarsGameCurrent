@@ -36,6 +36,12 @@ public enum Allignment
 	protected int y;
 	protected int[][] location;
 	protected Allignment allignment;
+	//these instance variables only apply to some ships but still want to put them in this class
+	
+	protected int energy;
+	protected boolean shieldsUp;
+	protected int shieldStrength; //need to set default values{
+	//I would like to add some way to check what implementations a ship is using. For example with my TantiveIV class I can say that, because it impliments ForceField, I need to handle damage differently
 	
 	/**
 	 * Somewhere here I think I need to store the location of the ship
@@ -77,9 +83,8 @@ public enum Allignment
 		String[] movements = new String[speed];
 		int moveCounters = speed;
 		for (int i = 0; i < speed; i++) {
-			
-			int breaker = 0;
-			while (breaker == 0) {
+
+			while (moveCounters > 0) {
 				System.out.println("this ship can move " + moveCounters + " more time(s)");
 				System.out.println ("would you like to move 'north' 'south' 'east' 'west'");
 				//or should I do up down left right?
@@ -88,8 +93,8 @@ public enum Allignment
 				if (input.equals("north") || input.equals("south" )|| input.equals("east") || input.equals("west"))
 				{
 					System.out.println("legal move in the " + input + " direction");
-					movements[i] = input;
-					breaker++;
+					movements[i] = input; //your input is stored in the string which will be read by the grid class and turned into a movement
+					moveCounters--;
 					continue;
 				}
 				else
@@ -98,6 +103,8 @@ public enum Allignment
 					continue;
 				}
 			}
+			
+		
 			
 		}
 		return movements;
@@ -259,5 +266,25 @@ public enum Allignment
 	{
 		return name + "       ";
 	}
+	public boolean getShieldsUp()
+	{
+		return shieldsUp;
+	}
+	
+	public void setShieldsUp(boolean shieldsUp)
+	{
+		this.shieldsUp = shieldsUp;
+	}
+	
+	public int getEnergy()
+	{
+		return energy;
+	}
+	
+	public int getShieldStrength()
+	{
+		return shieldStrength;
+	}
+	
 
 }

@@ -116,8 +116,7 @@ public class Game {
 		 * What is the best way to fix this
 		 */
 		
-		System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
-		System.out.println("'X Wing', 'B Wing' 'Tantive IV'");//there must be a better way to do this based off of ship allignments but not sure how
+		
 		
 		while (agressor.getPoints() > 0) //as long as you have points you can keep buying ships
 		{
@@ -136,6 +135,8 @@ public class Game {
 				grid.printGrid();
 			}
 			System.out.println("now choose a ship");
+			System.out.println("your avalable options are..."); //do I just hard code this? What's a better way?
+			System.out.println("'X Wing', 'B Wing' 'Tantive IV'");//there must be a better way to do this based off of ship allignments but not sure how
 			choice = keyboard.nextLine();
 			if (choice.equals("X Wing") && agressor.getPoints() >= XWing.getCost())
 			{
@@ -145,30 +146,20 @@ public class Game {
 				System.out.println("place ship in row major order");
 				x = keyboard.nextInt();
 				y = keyboard.nextInt();
-				int tortuse = 0;
 				
-				while (tortuse == 0) {
-				if(grid.isEmpty(x, y) == true)
-				{
-					grid.placeShip(xWing, x, y);
-					tortuse++;
-				}
-				/**
-				 * I sense there is a more efficient way to do this check here and only needing to type some of this stuff once... Gri
-				 */
-				else
-				{
-					System.out.println("location invalid ship already there");
-					break;
-				}
-			}
+				grid.placeShip(xWing, x, y);
 			}
 			
 			else if (choice.equals("Tantive IV") && agressor.getPoints() >=TantiveIV.getCost())
 			{
-				/**
-				 * do the things
-				 */
+				TantiveIV tiv = new TantiveIV();
+				agressor.takeControlOf(tiv);
+				agressor.removePoints(tiv.getCost());
+				
+				System.out.println("place ship in row major order");
+				int row = keyboard.nextInt();
+				int column = keyboard.nextInt();
+				grid.placeShip(tiv, row, column);
 			}
 			
 			else if (choice.equals("B Wing") && agressor.getPoints() >= BWing.getCost())
@@ -180,20 +171,9 @@ public class Game {
 				System.out.println("place ship in row major order");
 				x = keyboard.nextInt();
 				y = keyboard.nextInt();
-				int tortuse = 0;
 				
-				while (tortuse == 0) {
-				if(grid.isEmpty(x, y) == true)
-				{
-					grid.placeShip(bWing, x, y);
-					tortuse++;
-				}
-				else
-				{
-					System.out.println("location invalid ship already there");
-					continue;
-				}
-			}
+				grid.placeShip(bWing, x, y);
+			
 			}
 
 			else if (choice.equals("break"))
