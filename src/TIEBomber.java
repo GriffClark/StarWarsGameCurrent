@@ -1,7 +1,6 @@
-//X Wings are the only ships that can destroy the death star and that can only be done with the torpedo
 import java.util.Scanner;
-public class XWing extends Ship{
-	
+
+public class TIEBomber extends Ship{
 
 	protected int torpedoesLeft;
 	
@@ -13,29 +12,24 @@ public class XWing extends Ship{
 	public int getTorpedoesLeft()
 	{
 		return torpedoesLeft;
+		
 	}
-	public XWing()
+	public TIEBomber()
 	{
-		health = 50;
-		attack = 40;
-		speed = 6;
-		name = "X Wing";
-		range = 3;
-		graphic = 'X';
-		pointCost = 1;
-		allignment = Ship.Allignment.Rebel;
-		torpedoesLeft = 4;
-	}
-	
-	@Override
-	public void useAbility()
-	{
-		//need to come up with an ability
+		
+			health = 100 + ((int)(Math.random() * 40));
+			attack = 30 + (int)(Math.random() * 70);
+			speed = 3;
+			name = "TIE Bomber";
+			range = 2;
+			graphic = 'I';
+			pointCost = 1.5;
+			allignment = Ship.Allignment.Imperial;
+			torpedoesLeft = 5;
 	}
 	
 	public Torpedo fireTorpedo()
 	{
-		
 		if (torpedoesLeft > 0)
 		{
 		Scanner s = new Scanner (System.in);
@@ -44,9 +38,8 @@ public class XWing extends Ship{
 		int x = s.nextInt();
 		int y = s.nextInt();
 		int[][] targetLocation = new int[x][y];
-		Torpedo torpedo = new Torpedo(20, targetLocation, "X Wing Torpedo", 3);
+		Torpedo torpedo = new Torpedo(40, targetLocation, "TIE Bomber Torpedo", 8); 
 		torpedoesLeft--;
-		//add clause that x wing torpedoes can destroy death star
 		//fires a torpedo at target location
 		return torpedo; //this creates a new torpedo which is fired at a ship
 		}
@@ -57,7 +50,5 @@ public class XWing extends Ship{
 			return null;
 		}
 	}
-	
-	
 	
 }

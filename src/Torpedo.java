@@ -1,15 +1,19 @@
 
 public class Torpedo implements Projectile, Explosive{ //correct use of interface?
 	
+	
+	/*
+	 * need to make it so that torpedo will plot a path to target location, and if something gets in it's way it hits the something
+	 */
 	int range;
 	int blastRadius;
 	int damage;
 	String name;
-	Ship target;
+	int[][] target;
+	char graphic = '+';
 	
-	public Torpedo (int damage, Ship target, String name)
+	public Torpedo (int damage, int[][] target, String name, int range)
 	{
-		range = 6;
 		blastRadius = 2;
 		this.damage = damage;
 		this.target = target;
@@ -23,7 +27,7 @@ public class Torpedo implements Projectile, Explosive{ //correct use of interfac
 
 	@Override
 	public void setBlastRadius(int radius) {
-		// TODO Auto-generated method stub
+		this.blastRadius = radius;
 		
 	}
 
@@ -37,6 +41,11 @@ public class Torpedo implements Projectile, Explosive{ //correct use of interfac
 	public int getRange() {
 		// TODO Auto-generated method stub
 		return range;
+	}
+	
+	public char getGraphic()
+	{
+		return graphic;
 	}
 
 	@Override

@@ -15,8 +15,6 @@ public class TantiveIV extends Ship implements ForceField
 		shieldsUp = false;
 	}
 	
-	
-	
 	@Override
 	public String[] move() //special because moves slower if shields are up
 	{

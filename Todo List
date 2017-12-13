@@ -7,3 +7,4 @@ Find a way to calculate distance between two points
 Make sure that the current move system works (it is not very efficient and thus not a final system, but it should work for now)
 Fix the game loop to make it easier to work
 Fix the pre game loop to make it actually managable for the average person
+Figure out a better way to manage shop. display which ships are avalable for each player in a way that doesn't hard code it
