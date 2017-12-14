@@ -36,12 +36,7 @@ public enum Allignment
 	protected int y;
 	protected int[][] location;
 	protected Allignment allignment;
-	//these instance variables only apply to some ships but still want to put them in this class
-	
-	protected int energy;
-	protected boolean shieldsUp;
-	protected int shieldStrength; //need to set default values{
-	//I would like to add some way to check what implementations a ship is using. For example with my TantiveIV class I can say that, because it impliments ForceField, I need to handle damage differently
+
 	
 	/**
 	 * Somewhere here I think I need to store the location of the ship
@@ -139,6 +134,7 @@ public enum Allignment
 	
 	public static void dealDamage(Ship agressor, Ship victim)
 	{
+		//should add a clause in here warning if you have targeted a friendly ship
 		boolean getHit;
 		int dodgeInt = (int)(Math.random() * 10);
 		if (victim.getSpeed() / 2 >= agressor.getSpeed())
@@ -171,11 +167,7 @@ public enum Allignment
 		
 		//could put a print statement here but I don't think that I need it
 	}
-	
-	public void useAbility()
-	{
-		//things
-	}
+
 	
 	public int getSpeed()
 	{
@@ -266,25 +258,5 @@ public enum Allignment
 	{
 		return name + "       ";
 	}
-	public boolean getShieldsUp()
-	{
-		return shieldsUp;
-	}
-	
-	public void setShieldsUp(boolean shieldsUp)
-	{
-		this.shieldsUp = shieldsUp;
-	}
-	
-	public int getEnergy()
-	{
-		return energy;
-	}
-	
-	public int getShieldStrength()
-	{
-		return shieldStrength;
-	}
-	
 
 }

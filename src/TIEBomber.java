@@ -27,7 +27,10 @@ public class TIEBomber extends Ship{
 			allignment = Ship.Allignment.Imperial;
 			torpedoesLeft = 5;
 	}
-	
+	/**
+	 * So ideally how torpedoes work is you pick a coordinate and they move to that coordinate at a certian speed during the end of each of your turns
+	 * @return
+	 */
 	public Torpedo fireTorpedo()
 	{
 		if (torpedoesLeft > 0)

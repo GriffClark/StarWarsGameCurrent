@@ -1,15 +1,2 @@
-/BWing.class
-/DeathStar.class
-/Explosive.class
-/Game.class
-/Player.class
-/Projectile.class
-/Ship.class
-/ShipType.class
-/StarDestroyer.class
-/TIEFighter.class
-/Torpedo.class
-/XWing.class
-/Grid.class
-/Ship$Allignment.class
-/TantiveIV.class
+/ForceFieldShip.class
+/TIEBomber.class

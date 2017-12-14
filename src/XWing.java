@@ -27,11 +27,6 @@ public class XWing extends Ship{
 		torpedoesLeft = 4;
 	}
 	
-	@Override
-	public void useAbility()
-	{
-		//need to come up with an ability
-	}
 	
 	public Torpedo fireTorpedo()
 	{

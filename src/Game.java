@@ -328,6 +328,8 @@ public class Game {
 		int turnCounter = 0;
 		while(true)
 			
+			//add a statement printing a list of valid commands
+			
 			while(input != "pass turn") // this doesn't work
 				{
 					input = keyboard.nextLine();
