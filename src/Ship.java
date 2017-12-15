@@ -73,8 +73,13 @@ public enum Allignment
 		return x;
 	}
 	
-	public String[] move()
+	public int[][] move(int[][] location)
 	{
+		int[][] movements;
+		/**
+		 * I just broke this but what needs to happen is, based off of your speed, you can make a number of moves which are then applied to your current location (if you are at 4,3 and move 'north' you are now at 4,4
+		 * this new int[][] will be given to the game class to handle
+		 */
 		String[] movements = new String[speed];
 		int moveCounters = speed;
 		for (int i = 0; i < speed; i++) {
@@ -87,7 +92,7 @@ public enum Allignment
 				
 				if (input.equals("north") || input.equals("south" )|| input.equals("east") || input.equals("west"))
 				{
-					System.out.println("legal move in the " + input + " direction");
+					System.out.println("move in the " + input + " direction");
 					movements[i] = input; //your input is stored in the string which will be read by the grid class and turned into a movement
 					moveCounters--;
 					continue;
@@ -97,9 +102,13 @@ public enum Allignment
 					System.out.println("please enter a valad direction");
 					continue;
 				}
+				
 			}
 			
-		
+		/*
+		 * what do I do here to ensure that you can't go through walls or into other ships or any nonsense like that?
+		 * I think that somewhere in here I need to convert moves into xy coordinates and make sure that you aren't moving through anything
+		 */
 			
 		}
 		return movements;

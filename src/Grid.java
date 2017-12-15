@@ -90,5 +90,30 @@ public class Grid {
 			System.out.println(grid[x][y].toString());
 		}
 	}
+	
+	public void getInfo (int x, int y)
+	{
+		if (grid[x][y] != null)
+		{
+			System.out.println(grid[x][y].toString());
+		}
+		else
+		{
+			System.out.println("error nothing here");
+		}
+	}
+	
+	public void moveShip (int x, int y)
+	{
+		if (grid[x][y] != null)
+		{
+			grid[x][y].move(); //move command handles everything else
+		}
+		
+		else
+		{
+			System.out.println ("error nothing here");
+		}
+	}
 
 }

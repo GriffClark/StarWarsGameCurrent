@@ -115,9 +115,7 @@ public class Game {
 		 * right now it does not matter who is attacker or defender. player1 will always choose from the same list of ships. I want the attacker to choose from this list. 
 		 * What is the best way to fix this
 		 */
-		
-		
-		
+
 		while (agressor.getPoints() > 0) //as long as you have points you can keep buying ships
 		{
 			
@@ -376,6 +374,22 @@ public class Game {
 				
 			}
 			
+			else if (input.equals("move a ship"))
+			{
+				System.out.println("would you like to see the grid first? 'y' 'n'");
+				input = keyboard.nextLine();
+				if (input.equals("y"))
+				{
+					grid.printGrid();
+				}
+				System.out.println("enter coordinates of the ship you would like to move 'x''y'");
+				int reX = keyboard.nextInt();
+				int saY = keyboard.nextInt();
+				//sorry it's been a weird day
+				grid.moveShip(reX, saY);
+				
+			}
+			
 			else if (input.equals("display ships")) //not else if because people can do multiple things per turn
 			{
 				System.out.println("for which player?");
@@ -389,30 +403,6 @@ public class Game {
 					System.out.println(player2.printShipsControlled());
 				}
 			}
-			
-			else if (input.equals("move ship"))
-			{
-				for(int i = 0; i < players.length; i++)
-				{
-					if(players[i].checkTurn() == true)
-					{
-						System.out.println("list of avalable ships:");
-						for (int p = 0; p < players[i].shipsControlled.size(); p++) //side note am I accessing Player.shipsControlled correctly?
-						{
-							System.out.println(players[i].shipsControlled.get(p).toString());
-						}
-						System.out.println("type the location of a ship you would like to move:"); //is this the best way to get them to move a ship?
-						input = keyboard.nextLine();
-						
-						/**
-						 * they input a location you get the speed and they can move the ship that many squares if they control it then re print the grid each time so they can see
-						 * handle out of bounds error
-						 * handle colison error
-						 */
-					}
-				}
-			}
-				//this seems to work ok
 			
 			//how to end turn
 			

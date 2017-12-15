@@ -12,6 +12,7 @@ public class Torpedo implements Projectile, Explosive{ //correct use of interfac
 	int[][] target;
 	char graphic = '+';
 	
+	//add detonation clause
 	public Torpedo (int damage, int[][] target, String name, int range)
 	{
 		blastRadius = 2;
